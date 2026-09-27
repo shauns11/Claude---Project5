@@ -34,10 +34,10 @@ display 2+2
 
 To run the do-file in batch mode, launch Stata with the `/e` flag from **PowerShell**, not the Bash tool. Git Bash rewrites leading-slash arguments like `/e` into filesystem paths, which silently breaks the flag — Stata then opens an idle interactive window instead of executing the do-file, and no log is produced.
 
-Use `Start-Process` with `-Wait` so the call blocks until Stata exits and the log file is finalized:
+Use `Start-Process` with `-Wait` so the call blocks until Stata exits and the log file is finalized. Set `-WorkingDirectory` to the project root so the relative `output\` path in `log using` resolves correctly:
 
 ```powershell
-Start-Process -FilePath "C:\Program Files\StataNow19\StataMP-64.exe" -ArgumentList '/e do "C:\CLAUDE\Projects\Project5\code\Do_File_Name.do"' -Wait
+Start-Process -FilePath "C:\Program Files\StataNow19\StataMP-64.exe" -ArgumentList '/e do "C:\CLAUDE\Projects\Project5\code\Do_File_Name.do"' -WorkingDirectory "C:\CLAUDE\Projects\Project5" -Wait
 ```
 
 After it returns, verify the expected `.log` file exists in `output\` before reporting the task as complete.
